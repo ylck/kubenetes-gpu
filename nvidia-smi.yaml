@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nvidia-smi
+spec:
+  containers:
+  - name: nvidia-smi
+    image: nvidia/cuda
+    command:
+      - nvidia-smi
+    imagePullPolicy: IfNotPresent
+    resources:
+      limits:
+        alpha.kubernetes.io/nvidia-gpu: 1
+    volumeMounts:
+      - mountPath: /usr/local/nvidia
+        name: bin
+  volumes:
+    - name: bin
+      hostPath:
+        path: /usr/lib/nvidia-387
+  restartPolicy: Never
